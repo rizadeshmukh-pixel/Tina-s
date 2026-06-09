@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Tina's MakeOver Salon & Academy — Umbergaon</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --noir: #080808;
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --gold-dark: #8B6914;
+    --cream: #F5EDD6;
+    --cream-dim: #D6C9A8;
+    --card: #111111;
+    --card2: #161616;
+    --text: #E8DFC8;
+    --muted: #7A7060;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--noir);
+    color: var(--text);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 48px;
+    background: linear-gradient(to bottom, rgba(8,8,8,0.98) 0%, transparent 100%);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garant', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--noir);
+    background: var(--gold);
+    padding: 10px 22px;
+    text-decoration: none;
+    transition: background 0.3s;
+  }
+  .nav-cta:hover { background: var(--gold-light); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 120px 24px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Shimmer foil background — the signature element */
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,168,76,0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 30% at 70% 20%, rgba(201,168,76,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 30% 20% at 20% 80%, rgba(201,168,76,0.03) 0%, transparent 50%);
+    animation: shimmer 8s ease-in-out infinite alternate;
+  }
+  @keyframes shimmer {
+    0%   { opacity: 0.6; transform: scale(1) rotate(0deg); }
+    100% { opacity: 1;   transform: scale(1.04) rotate(0.5deg); }
+  }
+
+  /* Gold foil scan line */
+  .hero::after {
+    content: '';
+    position: absolute; left: 0; right: 0; height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    top: 50%;
+    animation: scanline 6s ease-in-out infinite;
+    opacity: 0;
+  }
+  @keyframes scanline {
+    0%   { top: 20%; opacity: 0; }
+    30%  { opacity: 0.4; }
+    70%  { opacity: 0.4; }
+    100% { top: 80%; opacity: 0; }
+  }
+
+  .hero-eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+    position: relative;
+    display: flex; align-items: center; gap: 18px;
+  }
+  .hero-eyebrow::before,
+  .hero-eyebrow::after {
+    content: '';
+    display: block; width: 40px; height: 1px;
+    background: var(--gold-dark);
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garant', serif;
+    font-size: clamp(3.2rem, 8vw, 7.5rem);
+    font-weight: 300;
+    line-height: 1.0;
+    letter-spacing: -0.01em;
+    color: var(--cream);
+    position: relative;
+    margin-bottom: 10px;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+    font-weight: 300;
+  }
+  .hero-title .line2 {
+    display: block;
+    font-size: clamp(1.6rem, 4vw, 3.5rem);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-style: normal;
+    font-weight: 600;
+    color: var(--cream-dim);
+    margin-top: 8px;
+  }
+
+  .hero-sub {
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin: 32px 0 48px;
+    max-width: 480px;
+    line-height: 1.9;
+  }
+
+  .hero-actions {
+    display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+    position: relative;
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--noir);
+    padding: 15px 38px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+    border: 1px solid var(--gold);
+  }
+  .btn-primary:hover {
+    background: transparent;
+    color: var(--gold);
+  }
+  .btn-outline {
+    background: transparent;
+    color: var(--cream-dim);
+    padding: 15px 38px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid rgba(201,168,76,0.25);
+    transition: all 0.3s;
+  }
+  .btn-outline:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .hero-scroll span { width: 1px; height: 50px; background: linear-gradient(to bottom, var(--gold-dark), transparent); animation: scrolldrop 1.6s ease-in-out infinite; }
+  @keyframes scrolldrop { 0%,100%{transform:scaleY(0.3);opacity:0.3} 50%{transform:scaleY(1);opacity:1} }
+
+  /* ── MARQUEE ── */
+  .marquee-wrap {
+    overflow: hidden;
+    border-top: 1px solid rgba(201,168,76,0.15);
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    padding: 14px 0;
+    background: #0D0D0D;
+  }
+  .marquee-track {
+    display: flex; gap: 60px;
+    animation: marquee 22s linear infinite;
+    white-space: nowrap;
+  }
+  @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+  .marquee-item {
+    font-size: 0.68rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: flex; align-items: center; gap: 20px;
+    flex-shrink: 0;
+  }
+  .marquee-item::after { content: '✦'; color: var(--gold-dark); font-size: 0.5rem; }
+
+  /* ── ABOUT ── */
+  .about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    min-height: 70vh;
+  }
+  .about-visual {
+    background: var(--card);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 80px 60px;
+    position: relative;
+    overflow: hidden;
+    border-right: 1px solid rgba(201,168,76,0.08);
+  }
+  .about-visual::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 60% 40%, rgba(201,168,76,0.06) 0%, transparent 70%);
+  }
+  .about-icon {
+    font-size: 5rem;
+    margin-bottom: 28px;
+    position: relative;
+    filter: drop-shadow(0 0 20px rgba(201,168,76,0.3));
+  }
+  .dubai-badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    border: 1px solid rgba(201,168,76,0.3);
+    padding: 10px 22px;
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    position: relative;
+  }
+  .dubai-badge::before { content: '🇦🇪'; font-size: 1rem; }
+
+  .stat-row {
+    display: flex; gap: 50px;
+    margin-top: 50px;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Cormorant Garant', serif;
+    font-size: 2.8rem;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 5px;
+  }
+
+  .about-content {
+    padding: 80px 70px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .section-eyebrow {
+    font-size: 0.67rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .section-eyebrow::after { content: ''; display: block; width: 30px; height: 1px; background: var(--gold-dark); }
+  .section-title {
+    font-family: 'Cormorant Garant', serif;
+    font-size: clamp(2rem, 3.5vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--cream);
+    margin-bottom: 28px;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+  .section-body {
+    font-size: 0.88rem;
+    line-height: 1.95;
+    color: var(--muted);
+    max-width: 460px;
+  }
+  .section-body + .section-body { margin-top: 16px; }
+
+  .about-detail {
+    margin-top: 40px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .detail-row {
+    display: flex; align-items: center; gap: 14px;
+    font-size: 0.8rem;
+    color: var(--cream-dim);
+    letter-spacing: 0.04em;
+  }
+  .detail-row::before {
+    content: '';
+    width: 5px; height: 5px;
+    background: var(--gold);
+    flex-shrink: 0;
+    transform: rotate(45deg);
+  }
+
+  /* ── SERVICES ── */
+  .services-section {
+    padding: 100px 48px;
+    background: #0A0A0A;
+  }
+  .services-header {
+    text-align: center;
+    margin-bottom: 70px;
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .service-card {
+    background: var(--card);
+    padding: 44px 36px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s;
+    cursor: default;
+  }
+  .service-card::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s;
+  }
+  .service-card:hover { background: var(--card2); }
+  .service-card:hover::after { transform: scaleX(1); }
+  .service-card.featured {
+    background: linear-gradient(135deg, #151208, #100F08);
+    border: 1px solid rgba(201,168,76,0.18);
+  }
+  .service-icon {
+    font-size: 1.8rem;
+    margin-bottom: 22px;
+    display: block;
+    filter: grayscale(0.3);
+  }
+  .service-name {
+    font-family: 'Cormorant Garant', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+  .service-desc {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.85;
+  }
+  .service-tag {
+    display: inline-block;
+    margin-top: 20px;
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border-bottom: 1px solid var(--gold-dark);
+    padding-bottom: 2px;
+  }
+
+  /* ── ACADEMY ── */
+  .academy {
+    padding: 100px 48px;
+    background: var(--card);
+    border-top: 1px solid rgba(201,168,76,0.1);
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .academy-courses { margin-top: 40px; display: flex; flex-direction: column; gap: 0; }
+  .course-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    font-size: 0.85rem;
+    color: var(--cream-dim);
+    transition: color 0.3s;
+  }
+  .course-row:hover { color: var(--cream); }
+  .course-row:hover .course-num { color: var(--gold); }
+  .course-num {
+    font-family: 'Cormorant Garant', serif;
+    font-size: 1.6rem;
+    color: var(--gold-dark);
+    font-weight: 300;
+    transition: color 0.3s;
+    min-width: 36px;
+  }
+  .course-name { flex: 1; padding: 0 20px; letter-spacing: 0.04em; }
+  .course-arrow { color: var(--gold-dark); font-size: 0.8rem; }
+
+  .academy-right { display: flex; flex-direction: column; gap: 28px; }
+  .academy-feature {
+    padding: 28px 30px;
+    border: 1px solid rgba(201,168,76,0.12);
+    background: rgba(201,168,76,0.02);
+  }
+  .academy-feature-title {
+    font-family: 'Cormorant Garant', serif;
+    font-size: 1.15rem;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+  .academy-feature-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.8; }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials {
+    padding: 100px 48px;
+    background: var(--noir);
+    text-align: center;
+  }
+  .testimonials-header { margin-bottom: 60px; }
+  .reviews-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .review-card {
+    background: var(--card);
+    padding: 40px 34px;
+    text-align: left;
+  }
+  .review-stars {
+    color: var(--gold);
+    font-size: 0.8rem;
+    letter-spacing: 4px;
+    margin-bottom: 18px;
+  }
+  .review-text {
+    font-family: 'Cormorant Garant', serif;
+    font-size: 1.15rem;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.65;
+    margin-bottom: 22px;
+  }
+  .review-author {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── CONTACT ── */
+  .contact {
+    padding: 100px 48px;
+    background: var(--card);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .contact-detail {
+    display: flex; align-items: flex-start; gap: 18px;
+    margin-bottom: 36px;
+  }
+  .contact-icon {
+    width: 42px; height: 42px;
+    border: 1px solid rgba(201,168,76,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .contact-detail-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 5px;
+  }
+  .contact-detail-value {
+    font-size: 0.9rem;
+    color: var(--cream-dim);
+    line-height: 1.6;
+  }
+
+  .contact-hours {
+    padding: 32px;
+    background: rgba(201,168,76,0.04);
+    border: 1px solid rgba(201,168,76,0.12);
+    margin-top: 10px;
+  }
+  .hours-title {
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hours-title::after { content: ''; flex: 1; height: 1px; background: rgba(201,168,76,0.15); }
+  .hours-row {
+    display: flex; justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--cream-dim);
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .hours-row:last-child { border: none; }
+
+  .open-now {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    color: #6FCF97;
+    margin-top: 16px;
+  }
+  .open-dot { width: 7px; height: 7px; background: #6FCF97; border-radius: 50%; animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 40px 48px;
+    background: #050505;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(201,168,76,0.1);
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garant', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .footer-copy {
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+  .footer-social { display: flex; gap: 18px; }
+  .footer-social a {
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-social a:hover { color: var(--gold); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 18px 24px; }
+    .nav-links { display: none; }
+    .about { grid-template-columns: 1fr; }
+    .about-visual { padding: 60px 30px; }
+    .about-content { padding: 50px 30px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .academy { grid-template-columns: 1fr; gap: 50px; padding: 70px 24px; }
+    .reviews-strip { grid-template-columns: 1fr; }
+    .contact { grid-template-columns: 1fr; gap: 40px; padding: 70px 24px; }
+    footer { flex-direction: column; gap: 20px; text-align: center; padding: 32px 24px; }
+    .services-section { padding: 70px 20px; }
+    .testimonials { padding: 70px 20px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero::before, .hero::after, .marquee-track, .hero-scroll span,
+    .open-dot { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">Tina's</a>
+  <ul class="nav-links">
+    <li><a href="#about">Our Story</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#academy">Academy</a></li>
+    <li><a href="#contact">Visit</a></li>
+  </ul>
+  <a class="nav-cta" href="tel:+919158143895">Book Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">Est. Umbergaon &amp; Dubai Heritage</p>
+  <h1 class="hero-title">
+    <em>Where Beauty</em>
+    <span class="line2">Becomes Art</span>
+  </h1>
+  <p class="hero-sub">Luxury salon &amp; professional academy bringing Dubai's world-class beauty expertise to Umbergaon, Gujarat.</p>
+  <div class="hero-actions">
+    <a class="btn-primary" href="tel:+919158143895">Book an Appointment</a>
+    <a class="btn-outline" href="#services">Explore Services</a>
+  </div>
+  <div class="hero-scroll">Scroll<span></span></div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Bridal Makeover</span>
+    <span class="marquee-item">Hair Styling</span>
+    <span class="marquee-item">Skin Treatments</span>
+    <span class="marquee-item">Dubai-Trained Experts</span>
+    <span class="marquee-item">Professional Academy</span>
+    <span class="marquee-item">Nail Art</span>
+    <span class="marquee-item">Waxing &amp; Threading</span>
+    <span class="marquee-item">Mehendi</span>
+    <!-- duplicate for seamless loop -->
+    <span class="marquee-item">Bridal Makeover</span>
+    <span class="marquee-item">Hair Styling</span>
+    <span class="marquee-item">Skin Treatments</span>
+    <span class="marquee-item">Dubai-Trained Experts</span>
+    <span class="marquee-item">Professional Academy</span>
+    <span class="marquee-item">Nail Art</span>
+    <span class="marquee-item">Waxing &amp; Threading</span>
+    <span class="marquee-item">Mehendi</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-visual">
+    <div class="about-icon">✦</div>
+    <div class="dubai-badge">Dubai-Trained Expertise</div>
+    <div class="stat-row">
+      <div class="stat">
+        <div class="stat-num">5+</div>
+        <div class="stat-label">Years in Dubai</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Happy Clients</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3.3★</div>
+        <div class="stat-label">Google Rated</div>
+      </div>
+    </div>
+  </div>
+  <div class="about-content">
+    <p class="section-eyebrow">Our Story</p>
+    <h2 class="section-title">Craft Honed<br/>in the <em>Heart of Dubai</em></h2>
+    <p class="section-body">Tina's MakeOver was founded with a singular vision — to bring the precision, technique, and luxury of international beauty artistry to the heart of South Gujarat.</p>
+    <p class="section-body">Our founder trained and worked in Dubai's elite beauty circuit, absorbing the exacting standards demanded by clientele from over 200 nationalities. Every cut, contour, and colour treatment at Tina's carries that global perspective.</p>
+    <div class="about-detail">
+      <div class="detail-row">Shop No. 06, Royal Lake City, Sanjan Road, Umbergaon</div>
+      <div class="detail-row">Near Akra Maruti Lake, Valsad — 396170</div>
+      <div class="detail-row">Call us: +91 91581 43895 · +91 63537 06107</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-section" id="services">
+  <div class="services-header">
+    <p class="section-eyebrow" style="justify-content:center">Our Services</p>
+    <h2 class="section-title" style="text-align:center">A Full Spectrum<br/><em>of Transformation</em></h2>
+  </div>
+  <div class="services-grid">
+    <div class="service-card featured">
+      <span class="service-icon">💍</span>
+      <h3 class="service-name">Bridal Makeover</h3>
+      <p class="service-desc">Complete bridal packages combining HD makeup, draping, and Mehendi — crafted for the most important day of your life.</p>
+      <span class="service-tag">Signature</span>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">✂️</span>
+      <h3 class="service-name">Hair Styling & Cuts</h3>
+      <p class="service-desc">From precision cuts to global colour trends — balayage, highlights, keratin treatments, and blowouts with Dubai-level finesse.</p>
+      <span class="service-tag">Popular</span>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">✨</span>
+      <h3 class="service-name">Skin & Facial Care</h3>
+      <p class="service-desc">Advanced facials, clean-up treatments, de-tan rituals, and brightening therapies tailored to India's climate and skin tones.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">💅</span>
+      <h3 class="service-name">Nail Art & Extensions</h3>
+      <p class="service-desc">Gel, acrylic, and nail art — expressive designs from minimalist to statement, done with salon-grade precision.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🌿</span>
+      <h3 class="service-name">Waxing & Threading</h3>
+      <p class="service-desc">Full-body waxing and expert threading for long-lasting smoothness, done with premium products and care.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🪷</span>
+      <h3 class="service-name">Party & Occasion Makeup</h3>
+      <p class="service-desc">Flawless looks for every occasion — sangeet, reception, engagements, parties, and photoshoots.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ACADEMY -->
+<section id="academy" style="background:#0A0A0A; padding: 0;">
+<div class="academy">
+  <div>
+    <p class="section-eyebrow">The Academy</p>
+    <h2 class="section-title">Master the<br/><em>Craft Professionally</em></h2>
+    <p class="section-body">Tina's MakeOver Academy offers structured beauty courses taught by professionals with real international industry experience. Launch your career with confidence.</p>
+    <div class="academy-courses">
+      <div class="course-row">
+        <span class="course-num">01</span>
+        <span class="course-name">Complete Bridal &amp; Makeup Artistry</span>
+        <span class="course-arrow">→</span>
+      </div>
+      <div class="course-row">
+        <span class="course-num">02</span>
+        <span class="course-name">Advanced Hair Styling & Colouring</span>
+        <span class="course-arrow">→</span>
+      </div>
+      <div class="course-row">
+        <span class="course-num">03</span>
+        <span class="course-name">Nail Art & Extension Techniques</span>
+        <span class="course-arrow">→</span>
+      </div>
+      <div class="course-row">
+        <span class="course-num">04</span>
+        <span class="course-name">Skin Care & Facial Protocols</span>
+        <span class="course-arrow">→</span>
+      </div>
+      <div class="course-row">
+        <span class="course-num">05</span>
+        <span class="course-name">Short-Term Certification Courses</span>
+        <span class="course-arrow">→</span>
+      </div>
+    </div>
+  </div>
+  <div class="academy-right">
+    <div class="academy-feature">
+      <h4 class="academy-feature-title">✦ International Curriculum</h4>
+      <p class="academy-feature-desc">Course content shaped by Dubai beauty industry standards — giving students skills that travel beyond borders.</p>
+    </div>
+    <div class="academy-feature">
+      <h4 class="academy-feature-title">✦ Hands-On Training</h4>
+      <p class="academy-feature-desc">Live model sessions, real client work, and product-level training from day one.</p>
+    </div>
+    <div class="academy-feature">
+      <h4 class="academy-feature-title">✦ Certificate of Completion</h4>
+      <p class="academy-feature-desc">Recognised certification to launch your career at studios, on sets, or independently.</p>
+    </div>
+    <a class="btn-primary" href="tel:+919158143895" style="text-align:center; margin-top:10px;">Enquire About Courses</a>
+  </div>
+</div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="testimonials-header">
+    <p class="section-eyebrow" style="justify-content:center">Client Words</p>
+    <h2 class="section-title" style="text-align:center"><em>Experiences</em> That Speak</h2>
+  </div>
+  <div class="reviews-strip">
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"My bridal look was absolute perfection. The team understood exactly what I wanted and delivered it flawlessly."</p>
+      <p class="review-author">— Priya S., Bridal Client</p>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"The hair colour I got here is exactly the balayage I'd seen online. Clean, professional, and the service was so comfortable."</p>
+      <p class="review-author">— Meera D., Hair Colour</p>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★☆</div>
+      <p class="review-text">"Enrolled in the makeup course and it completely changed my career path. The training quality here is surprisingly high for this area."</p>
+      <p class="review-author">— Komal R., Academy Student</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="background: var(--card);">
+<div class="contact">
+  <div>
+    <p class="section-eyebrow">Find Us</p>
+    <h2 class="section-title">Visit the<br/><em>Salon</em></h2>
+    <div class="contact-detail">
+      <div class="contact-icon">📍</div>
+      <div>
+        <p class="contact-detail-label">Address</p>
+        <p class="contact-detail-value">Shop No. 06, Royal Lake City<br/>Sanjan Road, Near Akra Maruti Lake<br/>Umbergaon (Umargam), Gujarat — 396170</p>
+      </div>
+    </div>
+    <div class="contact-detail">
+      <div class="contact-icon">📞</div>
+      <div>
+        <p class="contact-detail-label">Call Us</p>
+        <p class="contact-detail-value">+91 91581 43895<br/>+91 63537 06107</p>
+      </div>
+    </div>
+    <div class="contact-detail">
+      <div class="contact-icon">📱</div>
+      <div>
+        <p class="contact-detail-label">Social</p>
+        <p class="contact-detail-value">@tinas_makeover_salon on Instagram</p>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="contact-hours">
+      <p class="hours-title">Opening Hours</p>
+      <div class="hours-row"><span>Monday – Friday</span><span>9:00 AM – 8:00 PM</span></div>
+      <div class="hours-row"><span>Saturday</span><span>9:00 AM – 8:00 PM</span></div>
+      <div class="hours-row"><span>Sunday</span><span>10:00 AM – 6:00 PM</span></div>
+      <div class="open-now"><span class="open-dot"></span> Open Now · Walk-ins Welcome</div>
+    </div>
+    <div style="margin-top:28px;">
+      <p style="font-size:0.78rem; color: var(--muted); line-height:1.85; margin-bottom:20px;">For bridal bookings, course enquiries, or group packages — call us directly for the best availability.</p>
+      <a class="btn-primary" href="tel:+919158143895">+91 91581 43895</a>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Tina's MakeOver</div>
+  <p class="footer-copy">© 2025 Tina's MakeOver Salon & Academy, Umbergaon, Gujarat</p>
+  <div class="footer-social">
+    <a href="https://instagram.com/tinas_makeover_salon" target="_blank">Instagram</a>
+    <a href="https://m.facebook.com/100057401261232" target="_blank">Facebook</a>
+  </div>
+</footer>
+
+</body>
+</html>
